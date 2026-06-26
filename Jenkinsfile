@@ -1,7 +1,7 @@
 def dockerImage
 pipeline {
     agent {
-        label 'slave-agent'
+        label 'slave-jenkins-agent'
     }
     environment {
         IMAGE_NAME = "afeez1131/java-project"
