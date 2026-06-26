@@ -1,7 +1,7 @@
 def dockerImage
 pipeline {
     agent {
-        label 'slave-jenkins-agent'
+        label 'slave-agent'
     }
     environment {
         IMAGE_NAME = "afeez1131/java-project"
@@ -134,6 +134,18 @@ pipeline {
                     '''
                 }
             }
+        }
+    }
+    post {
+        success {
+            slackSend channel: '#jenkins',
+                color: 'good',
+                message: "Pipeline succeeded: ${env.JOB_NAME} #${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
+        }
+        failure {
+            slackSend channel: '#jenkins',
+                color: 'danger',
+                message: "Pipeline FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
         }
     }
 }
